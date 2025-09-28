@@ -1,0 +1,15 @@
+
+region: jp
+cadence_seconds: 210
+brands: [Rick Owens; Chrome Hearts; Maison Martin Margiela; Saint Laurent; Saint Laurent Paris; Dior; Dior Homme; Undercover; Balenciaga; Raf Simons; Comme des Garçons; Yohji Yamamoto; Issey Miyake; Bottega Veneta; Givenchy; Gucci; Tom Ford; Jean Paul Gaultier; Chanel; Dolce & Gabbana; Miu Miu; Prada; Celine; Dsquared2; Balmain; Enfants Riches Déprimés; Visvim; Number (N)ine; Ann Demeulemeester; Julius; Guidi; Helmut Lang; Dries Van Noten; Jil Sander; Alexander McQueen; Loewe; Marni; Acne Studios; Lemaire; The Row; Off-White; Vetements; Stone Island; C.P. Company; Acronym; Kapital; Needles; Sacai; Cav Empt; Maison Kitsuné; AMI Paris]
+providers:
+  ebay:
+    enabled: true
+    options:
+      cadence_seconds: 260
+  vinted:
+    enabled: false
+  mercari_jp:
+    enabled: false
+  buyee_yahoo:
+    enabled: false

@@ -1,0 +1,110 @@
+
+version: "3.9"
+
+services:
+  hunter-eu:
+    build: .
+    image: archive-hunter:latest
+    container_name: hunter-eu
+    environment:
+      - TZ=Europe/Amsterdam
+    env_file:
+      - .env
+    command: ["python", "finder_opt.py", "--config", "config.eu.yaml"]
+    volumes:
+      - ./data:/app/data
+      - ./backups:/app/backups
+      - ./exports:/app/exports
+    mem_limit: 1g
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+    depends_on:
+      - dashboard
+      - metrics
+
+  hunter-jp:
+    image: archive-hunter:latest
+    container_name: hunter-jp
+    environment:
+      - TZ=Europe/Amsterdam
+    env_file:
+      - .env
+    command: ["python", "finder_opt.py", "--config", "config.jp.yaml"]
+    volumes:
+      - ./data:/app/data
+      - ./backups:/app/backups
+      - ./exports:/app/exports
+    mem_limit: 1g
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+    depends_on:
+      - dashboard
+      - metrics
+
+  dashboard:
+    image: archive-hunter:latest
+    container_name: dashboard
+    environment:
+      - TZ=Europe/Amsterdam
+    env_file:
+      - .env
+    command: ["python", "tools/dashboard.py"]
+    ports:
+      - "8090:8090"
+    mem_limit: 512m
+    deploy:
+      resources:
+        limits:
+          cpus: "0.8"
+
+  metrics:
+    image: archive-hunter:latest
+    container_name: metrics
+    environment:
+      - TZ=Europe/Amsterdam
+    env_file:
+      - .env
+    command: ["python", "tools/metrics.py"]
+    ports:
+      - "9108:9108"
+    mem_limit: 256m
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+
+  backlog:
+    image: archive-hunter:latest
+    container_name: backlog
+    environment:
+      - TZ=Europe/Amsterdam
+    env_file:
+      - .env
+    command: ["python", "tools/backlog_service.py"]
+    volumes:
+      - ./data:/app/data
+
+  burst:
+    image: archive-hunter:latest
+    container_name: burst
+    environment:
+      - TZ=Europe/Amsterdam
+    env_file:
+      - .env
+    command: ["python", "tools/burst_service.py"]
+    volumes:
+      - ./data:/app/data
+
+  discord-bot:
+    image: archive-hunter:latest
+    container_name: discord-bot
+    environment:
+      - TZ=Europe/Amsterdam
+    env_file:
+      - .env
+    command: ["python", "tools/discord_bot.py"]
+    restart: "no"
